@@ -106,7 +106,11 @@ export const Overflow: Story = {
             <story-breadcrumb width="22rem" />
             <story-breadcrumb width="22rem" [reverse]="true" label="Reversed trail" />
         `
-    })
+    }),
+    // the items collapse after a resize observation; wait for it, so that axe does not scan a changing DOM
+    play: async ({ canvasElement }) => {
+        await waitFor(() => expect(canvasElement.querySelectorAll('[data-breadcrumb-more]')).toHaveLength(2));
+    }
 };
 
 export const OpenOverflow: Story = {
