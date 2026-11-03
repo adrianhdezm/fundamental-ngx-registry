@@ -15,7 +15,6 @@
           "options": {
             "configDir": ".storybook/angular",
             "tsConfig": ".storybook/angular/tsconfig.json",
-            "styles": [".storybook/angular/styles.css"],
             "experimentalZoneless": true,
             "compodoc": false,
             "port": 6006
@@ -26,7 +25,6 @@
           "options": {
             "configDir": ".storybook/angular",
             "tsConfig": ".storybook/angular/tsconfig.json",
-            "styles": [".storybook/angular/styles.css"],
             "experimentalZoneless": true,
             "compodoc": false,
             "outputDir": "dist/storybook"

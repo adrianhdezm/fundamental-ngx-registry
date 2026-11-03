@@ -1,4 +1,3 @@
-import './styles.css';
 import { setProjectAnnotations } from '@analogjs/storybook-angular/testing';
 import * as a11yAnnotations from '@storybook/addon-a11y/preview';
 import type { StoryContext } from '@analogjs/storybook-angular';

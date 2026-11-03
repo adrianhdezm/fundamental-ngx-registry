@@ -1,5 +1,6 @@
 import { BidiModule } from '@angular/cdk/bidi';
 import { componentWrapperDecorator, moduleMetadata, type Decorator, type Preview } from '@analogjs/storybook-angular';
+import './styles.css';
 
 export const THEMES = {
     sap_horizon: 'Horizon',
