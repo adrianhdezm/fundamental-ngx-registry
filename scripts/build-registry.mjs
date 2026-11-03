@@ -154,10 +154,12 @@ if (errors.length) {
     process.exit(1);
 }
 
+// start from an empty public/r, so that items removed or moved since the last build are not served
+if (!checkOnly) rmSync(join(root, 'public/r'), { recursive: true, force: true });
+
 for (const { framework, index, items } of registries) {
     if (!checkOnly) {
         const dir = join(root, 'public/r', framework);
-        rmSync(dir, { recursive: true, force: true });
         mkdirSync(dir, { recursive: true });
         for (const item of items) writeFileSync(join(dir, `${item.name}.json`), JSON.stringify(item, null, 2) + '\n');
         writeFileSync(join(dir, 'registry.json'), JSON.stringify(index, null, 2) + '\n');
