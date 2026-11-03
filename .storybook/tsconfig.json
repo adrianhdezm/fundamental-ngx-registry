@@ -6,5 +6,5 @@
     "resolveJsonModule": true
   },
   "exclude": ["../registry/**/*.spec.ts"],
-  "include": ["../registry/**/*.ts", "./*.ts"]
+  "include": ["../registry/**/*.ts", "../docs/**/*.ts", "./*.ts"]
 }
