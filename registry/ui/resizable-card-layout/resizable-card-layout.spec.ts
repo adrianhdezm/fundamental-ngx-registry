@@ -118,6 +118,9 @@ async function setup(config: Partial<{ width: number; cards: ResizableCardItemCo
     };
     await stable();
     const root = fixture.nativeElement as HTMLElement;
+    // the real cursor stays where an earlier test left it; over a card, that card shows its corner handle
+    await userEvent.hover(root.querySelector<HTMLElement>('#before')!);
+    await stable();
     const layout = root.querySelector<HTMLElement>('fd-resizable-card-layout')!;
     const items = () => [...root.querySelectorAll<HTMLElement>('fd-resizable-card-item')];
     const item = (title: string) => items().find((i) => i.getAttribute('aria-label') === title)!;
