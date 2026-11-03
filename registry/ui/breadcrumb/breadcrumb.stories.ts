@@ -107,9 +107,11 @@ export const Overflow: Story = {
             <story-breadcrumb width="22rem" [reverse]="true" label="Reversed trail" />
         `
     }),
-    // the items collapse after a resize observation; wait for it, so that axe does not scan a changing DOM
+    // the items collapse after a resize observation; wait for it, so that axe does not scan a changing DOM.
+    // The "more" link then triggers one more measurement with its real width: wait two frames for that pass.
     play: async ({ canvasElement }) => {
         await waitFor(() => expect(canvasElement.querySelectorAll('[data-breadcrumb-more]')).toHaveLength(2));
+        await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
     }
 };
 
