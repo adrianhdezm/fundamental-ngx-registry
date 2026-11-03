@@ -1,0 +1,18 @@
+@import 'tailwindcss';
+@import '../../registry/styles/fundamental.css';
+@import '@angular/cdk/overlay-prebuilt.css';
+
+@source '../../registry/angular';
+@source '../../registry/lib';
+@source './';
+@source '../../docs';
+
+body {
+    min-height: 100vh;
+    background-color: var(--sapBackgroundColor);
+}
+
+/* Tailwind's preflight removes list markers; Storybook's docs styles bring them back for <ul> only */
+.sbdocs ol {
+    list-style-type: decimal;
+}

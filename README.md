@@ -1,34 +1,40 @@
 # fundamental-ngx-registry
 
-SAP Fiori Horizon components for Angular, as copy-paste source files.
+SAP Fiori Horizon components as copy-paste source files, with one registry per framework. The Angular registry is
+complete; a React registry is being added next to it.
 
-**Storybook:** https://adrianhdezm.github.io/fundamental-ngx-registry/ (the registry is served from the same site under
-`/r/<name>.json`).
+**Storybook:** https://adrianhdezm.github.io/fundamental-ngx-registry/ (the registries are served from the same site
+under `/r/<framework>/<name>.json`, for example `/r/angular/button.json`).
 
 - **Unofficial port of [`@fundamental-ngx/core`](https://sap.github.io/fundamental-ngx/#/core/home)** (Apache-2.0, see [License and attribution](#license-and-attribution)): same behaviour, ARIA and keyboard handling. Not ported: the legacy avatar group and the table.
 - **Styled with Tailwind CSS v4** on the SAP theme tokens from [`@sap-theming/theming-base-content`](https://github.com/SAP/theming-base-content). No fundamental-styles CSS at runtime.
 - **Behaviour from the Angular CDK** (a11y, overlay, bidi, ...).
 - **Modern Angular**: standalone, signals, `input()`/`model()`/`output()`, OnPush, zoneless.
-- **shadcn-style distribution**: copy `registry/ui/<name>/` into your app, or `npx shadcn add <registry-url>/r/<name>.json`.
+- **shadcn-style distribution**: copy `registry/angular/ui/<name>/` into your app, or `npx shadcn add <registry-url>/r/angular/<name>.json`.
 - **Themes**: Horizon, Horizon Dark, Horizon HC Black, Horizon HC White. **Density**: cozy, compact (and condensed). **RTL**.
 
 ## Repository layout
 
 ```
 registry/
-  lib/utils.ts            cn() (clsx + tailwind-merge aware of SAP tokens) and cva variants
-  styles/
+  styles/                 shared by every framework
     fundamental.css       entry point: imports below + density/state variants + base styles
     tokens.css            generated: every --sap* token as a Tailwind @theme value
     themes/*.css          generated: the four Horizon themes
     fonts.css, fonts/     generated: "72" and the SAP icon fonts
-  ui/<component>/         one self-contained folder per component (+ its *.stories.ts)
-registry.json             shadcn registry definition (source of truth)
+  lib/utils.ts            shared: cn() (clsx + tailwind-merge aware of SAP tokens) and cva variants
+  angular/
+    registry.json         shadcn registry definition of the Angular registry (source of truth)
+    tsconfig.json         strict Angular compiler settings and the @/ui, @/lib aliases
+    lib/                  Angular libs (datetime)
+    ui/<component>/       one self-contained folder per component (+ its spec and stories)
+.storybook/angular/       Storybook of the Angular registry (Analog builder)
+tests/angular/            setup and tsconfig of the Angular component tests
 scripts/
   generate-tokens.mjs     regenerates styles/ and the icon glyph map from theming-base-content
-  build-registry.mjs      builds public/r/*.json and checks each component's imports
+  build-registry.mjs      builds public/r/<framework>/*.json and checks each component's imports
   check-styles.mjs        compiles every class and flags unknown SAP tokens / broken var() names
-docs/                     Storybook introduction and foundations pages
+docs/                     Storybook introduction and foundations pages, and the parity reports
 ```
 
 ## Commands
@@ -39,7 +45,7 @@ Playwright and Chromium of the dev dependencies (`pnpm exec playwright install c
 ```sh
 pnpm install
 pnpm storybook          # http://localhost:6006
-pnpm build-storybook    # dist/storybook, including the registry under /r
+pnpm build-storybook    # dist/storybook, including the registries under /r/<framework>
 pnpm check              # typecheck (strict templates), style and registry checks, tests, a11y
 pnpm test               # component tests in Chromium (Vitest browser mode); specs next to each component
 pnpm test:a11y          # every story rendered by Vitest and checked with axe, in Horizon and Horizon HC Black
@@ -50,8 +56,8 @@ pnpm tokens             # regenerate the theme layer after bumping theming-base-
 
 ### With the shadcn CLI
 
-The registry is published at `https://adrianhdezm.github.io/fundamental-ngx-registry/r/<name>.json`, where `<name>`
-is the component's folder name (`button`, `date-picker`, ...). The CLI copies the source files into your app, along
+The Angular registry is published at `https://adrianhdezm.github.io/fundamental-ngx-registry/r/angular/<name>.json`,
+where `<name>` is the component's folder name (`button`, `date-picker`, ...). The CLI copies the source files into your app, along
 with the components each one uses, the theme (`src/styles/`), `src/lib/utils.ts` and the npm packages.
 
 1. Add Tailwind CSS v4, if the app doesn't have it yet:
@@ -82,12 +88,13 @@ with the components each one uses, the theme (`src/styles/`), `src/lib/utils.ts`
      match. To keep them inside `src/app/`, map `@/*` to `./src/app/*` in step 2; the aliases stay the same.
 4. Add components (pass several URLs to add them at once):
    ```sh
-   npx shadcn add https://adrianhdezm.github.io/fundamental-ngx-registry/r/button.json
+   npx shadcn add https://adrianhdezm.github.io/fundamental-ngx-registry/r/angular/button.json
    ```
-   The first one also adds the theme import after Tailwind in `src/styles.css`:
+   The first one also adds the theme and the CDK overlay styles after Tailwind in `src/styles.css`:
    ```css
    @import 'tailwindcss';
    @import './styles/fundamental.css';
+   @import '@angular/cdk/overlay-prebuilt.css';
    ```
    Horizon is the default theme; to pick another one or compact density, see [Theme and usage](#theme-and-usage).
 5. Raise the `initial` budget in `angular.json`, for example to `"maximumError": "3MB"`. The four themes and the icon
@@ -104,18 +111,20 @@ again with `--overwrite` and review the diff. The registry copy of `fonts.css` l
 pnpm add @angular/cdk clsx tailwind-merge class-variance-authority
 ```
 
-1. Copy `registry/styles/` to `src/styles/` and import it after Tailwind:
+1. Copy `registry/styles/` to `src/styles/` and import it after Tailwind, with the CDK overlay styles:
    ```css
    @import 'tailwindcss';
    @import './styles/fundamental.css';
+   @import '@angular/cdk/overlay-prebuilt.css';
    ```
 2. Copy `registry/lib/utils.ts` to `src/lib/utils.ts`.
 3. Add the aliases the components import from to `tsconfig.json`:
    ```json
    "paths": { "@/lib/*": ["./src/lib/*"], "@/ui/*": ["./src/components/ui/*"] }
    ```
-4. Copy the component folders you need to `src/components/ui/`. A component's `registryDependencies` in
-   `registry.json` lists the other folders it needs.
+4. Copy the folders of `registry/angular/ui/` you need to `src/components/ui/`, and `registry/angular/lib/datetime.ts`
+   to `src/lib/` for the date and time components. A component's `registryDependencies` in
+   `registry/angular/registry.json` lists the other folders it needs.
 
 ### Theme and usage
 

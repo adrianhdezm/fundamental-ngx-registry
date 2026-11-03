@@ -2,7 +2,7 @@
   "name": "fundamental-ngx-registry",
   "version": "0.0.0",
   "private": true,
-  "description": "SAP Fiori Horizon components for Angular, styled with Tailwind CSS and built on Angular CDK. Copy the source into your app, shadcn-style.",
+  "description": "SAP Fiori Horizon components for Angular and React, styled with Tailwind CSS. Copy the source into your app, shadcn-style.",
   "license": "Apache-2.0",
   "packageManager": "pnpm@10.28.0",
   "scripts": {
@@ -10,16 +10,16 @@
     "registry:build": "node scripts/build-registry.mjs",
     "storybook": "pnpm registry:build && ng run ui:storybook",
     "build-storybook": "pnpm registry:build && ng run ui:build-storybook",
-    "typecheck": "ngc -p tsconfig.json --noEmit",
-    "typecheck:tests": "ngc -p tests/tsconfig.json --noEmit",
+    "typecheck": "ngc -p registry/angular/tsconfig.json --noEmit",
+    "typecheck:tests": "ngc -p tests/angular/tsconfig.json --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "check:styles": "node scripts/check-styles.mjs",
     "registry:check": "node scripts/build-registry.mjs --check",
     "check": "pnpm typecheck && pnpm typecheck:tests && pnpm check:styles && pnpm registry:check && pnpm test && pnpm test:a11y",
-    "test": "vitest run --project unit",
-    "test:watch": "vitest --project unit",
-    "test:a11y": "node --max-old-space-size=6144 node_modules/vitest/vitest.mjs run --project a11y:sap_horizon && node --max-old-space-size=6144 node_modules/vitest/vitest.mjs run --project a11y:sap_horizon_hcb"
+    "test": "vitest run --project angular",
+    "test:watch": "vitest --project angular",
+    "test:a11y": "node --max-old-space-size=6144 node_modules/vitest/vitest.mjs run --project a11y:angular:sap_horizon && node --max-old-space-size=6144 node_modules/vitest/vitest.mjs run --project a11y:angular:sap_horizon_hcb"
   },
   "dependencies": {
     "@angular/animations": "^22.2.3",

@@ -1,8 +1,10 @@
 # fundamental-ngx-registry
 
-SAP Fiori Horizon components for Angular, distributed shadcn-style (copy-paste source). Each component is a port of
-`@fundamental-ngx/core` (behaviour, ARIA, keyboard), with the visuals of fundamental-styles rebuilt as Tailwind v4
-utilities on the `@sap-theming/theming-base-content` tokens. See `README.md` for the layout and usage.
+SAP Fiori Horizon components distributed shadcn-style (copy-paste source), one registry per framework under
+`registry/<framework>/`. Each Angular component is a port of `@fundamental-ngx/core` (behaviour, ARIA, keyboard), with
+the visuals of fundamental-styles rebuilt as Tailwind v4 utilities on the `@sap-theming/theming-base-content` tokens.
+The theme (`registry/styles/`) and `registry/lib/utils.ts` are shared by the frameworks. See `README.md` for the
+layout and usage.
 
 ## Workflow
 
@@ -24,19 +26,19 @@ Node 24 (`.nvmrc`) and pnpm (settings in `pnpm-workspace.yaml`, not in `package.
 pnpm check                                  # everything below; takes about 5 minutes
 pnpm typecheck && pnpm typecheck:tests      # strict templates for sources and specs
 pnpm check:styles                           # SAP token classes
-pnpm registry:check                         # registry.json and each component's imports
-pnpm test                                   # component and lib tests (Vitest browser mode, project "unit")
+pnpm registry:check                         # each registry/<framework>/registry.json and each component's imports
+pnpm test                                   # component and lib tests (Vitest browser mode, project "angular")
 pnpm test:a11y                              # axe on every story, Horizon and Horizon HC Black
-pnpm exec vitest run --project unit registry/ui/menu/   # one component; keep the trailing slash
+pnpm exec vitest run --project angular registry/angular/ui/menu/   # one component; keep the trailing slash
 pnpm format                                 # Prettier
 pnpm storybook                              # http://localhost:6006
 ```
 
 ## Components
 
-- One folder per component: `registry/ui/<name>/<name>.ts`, `<name>.spec.ts`, `<name>.stories.ts`, `index.ts`, and an
-  entry in `registry.json` (`registryDependencies` lists the components and libs it imports). Imports use the aliases
-  `@/ui/*` and `@/lib/*`.
+- One folder per component: `registry/angular/ui/<name>/<name>.ts`, `<name>.spec.ts`, `<name>.stories.ts`,
+  `index.ts`, and an entry in `registry/angular/registry.json` (`registryDependencies` lists the components and libs it
+  imports). Imports use the aliases `@/ui/*` and `@/lib/*`.
 - Standalone, signal inputs/models/outputs, `ChangeDetectionStrategy.OnPush`, zoneless. Behaviour from the Angular
   CDK; ARIA and keyboard handling ported from `@fundamental-ngx/core`.
 - Every source file keeps its attribution header (ported from, copyright, Apache-2.0).

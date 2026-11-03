@@ -1,0 +1,6 @@
+@import 'tailwindcss';
+@import '../../registry/styles/fundamental.css';
+@import '@angular/cdk/overlay-prebuilt.css';
+
+@source '../../registry/angular';
+@source '../../registry/lib';

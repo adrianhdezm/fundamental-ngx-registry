@@ -9,7 +9,9 @@
  * Theme:   set data-sap-theme="sap_horizon | sap_horizon_dark | sap_horizon_hcb | sap_horizon_hcw"
  *          on <html> (or any element, to theme a subtree). sap_horizon is the default.
  * Density: set data-density="compact" on <html> (or any element). Cozy is the default.
- * RTL:     set dir="rtl"; components use logical utilities (ps-, me-, start-, ...) and CDK Directionality.
+ * RTL:     set dir="rtl"; components use logical utilities (ps-, me-, start-, ...).
+ *
+ * Angular apps also import '@angular/cdk/overlay-prebuilt.css' for the overlays (the Angular theme item adds it).
  *
  * Copyright (c) fundamental-ngx-registry contributors.
  * SPDX-License-Identifier: Apache-2.0
@@ -21,7 +23,6 @@
 @import './themes/sap_horizon_hcw.css';
 @import './tokens.css';
 @import './extensions.css';
-@import '@angular/cdk/overlay-prebuilt.css';
 
 /* Motion used by components (busy indicator dots, skeleton shimmer). */
 @theme {

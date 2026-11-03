@@ -16,7 +16,7 @@ pnpm test:a11y    # accessibility of every story (also part of pnpm check)
 
 ## Where tests live
 
-Each component has a `<name>.spec.ts` next to its source, for example `registry/ui/grid-list/grid-list.spec.ts`.
+Each component has a `<name>.spec.ts` next to its source, for example `registry/angular/ui/grid-list/grid-list.spec.ts`.
 Spec files are not part of the registry items, so they are not copied into apps.
 
 New behaviour can start as a **test plan**: `it.todo(...)` entries for what is worth covering, ported from
@@ -45,11 +45,11 @@ expect(document.activeElement).toBe(items()[3]);
 `pnpm test:a11y` runs every story as a Vitest test through Storybook's Vitest addon (`@storybook/addon-vitest`):
 the story is rendered, its `play` function runs (stories named "Open: …" open their overlay there), and the a11y
 addon checks the page with axe. Any violation fails the test. The check runs once per theme, in Horizon and in
-Horizon High Contrast Black (the `a11y:<theme>` projects in `vitest.config.ts`); `.storybook/vitest.setup.ts` sets the
+Horizon High Contrast Black (the `a11y:angular:<theme>` projects in `vitest.config.ts`); `.storybook/angular/vitest.setup.ts` sets the
 theme and removes overlays left open by the previous story.
 
 ```sh
-pnpm exec vitest run --project a11y:sap_horizon registry/ui/menu   # one theme, one component
+pnpm exec vitest run --project a11y:angular:sap_horizon registry/angular/ui/menu/   # one theme, one component
 ```
 
 A story can turn a rule off with `parameters.a11y.config.rules`, for example colour contrast where Horizon's own

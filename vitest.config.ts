@@ -16,15 +16,15 @@ const browser = () => ({
 });
 
 /** Every story rendered and checked with axe in a theme (the a11y addon fails the test on violations). */
-const storybook = (theme: string) => ({
+const angularStorybook = (theme: string) => ({
     plugins: [
-        angular({ tsconfig: path('./.storybook/tsconfig.json') }),
-        storybookTest({ configDir: path('./.storybook') })
+        angular({ tsconfig: path('./.storybook/angular/tsconfig.json') }),
+        storybookTest({ configDir: path('./.storybook/angular') })
     ],
     define: { __A11Y_THEME__: JSON.stringify(theme) },
     test: {
-        name: `a11y:${theme}`,
-        setupFiles: ['.storybook/vitest.setup.ts'],
+        name: `a11y:angular:${theme}`,
+        setupFiles: [path('./.storybook/angular/vitest.setup.ts')],
         browser: browser()
     }
 });
@@ -49,24 +49,25 @@ export default defineConfig({
     },
     resolve: {
         alias: [
-            { find: /^@\/lib\//, replacement: path('./registry/lib/') },
-            { find: /^@\/ui\//, replacement: path('./registry/ui/') }
+            { find: /^@\/lib\/utils$/, replacement: path('./registry/lib/utils') },
+            { find: /^@\/lib\//, replacement: path('./registry/angular/lib/') },
+            { find: /^@\/ui\//, replacement: path('./registry/angular/ui/') }
         ]
     },
     test: {
         projects: [
             {
                 extends: true,
-                plugins: [angular({ tsconfig: path('./tests/tsconfig.json') })],
+                plugins: [angular({ tsconfig: path('./tests/angular/tsconfig.json') })],
                 test: {
-                    name: 'unit',
-                    include: ['registry/**/*.spec.ts'],
-                    setupFiles: ['tests/setup.ts'],
+                    name: 'angular',
+                    include: ['registry/angular/**/*.spec.ts', 'registry/lib/*.spec.ts'],
+                    setupFiles: ['tests/angular/setup.ts'],
                     browser: browser()
                 }
             },
-            { extends: true, ...storybook('sap_horizon') },
-            { extends: true, ...storybook('sap_horizon_hcb') }
+            { extends: true, ...angularStorybook('sap_horizon') },
+            { extends: true, ...angularStorybook('sap_horizon_hcb') }
         ]
     }
 });

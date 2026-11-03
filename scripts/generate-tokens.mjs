@@ -1,11 +1,11 @@
 /**
  * Generates the SAP theme layer from @sap-theming/theming-base-content:
  *
- *   registry/styles/themes/<theme>.css   the --sap* CSS variables of each Horizon theme
- *   registry/styles/fonts.css            @font-face rules for "72" and the SAP icon fonts
- *   registry/styles/fonts/*.woff2        the font files referenced by fonts.css
- *   registry/styles/tokens.css           Tailwind v4 `@theme inline` mapping of every token
- *   registry/ui/icon/icon-glyphs.ts      glyph name -> code point maps for the icon fonts
+ *   registry/styles/themes/<theme>.css        the --sap* CSS variables of each Horizon theme
+ *   registry/styles/fonts.css                 @font-face rules for "72" and the SAP icon fonts
+ *   registry/styles/fonts/*.woff2             the font files referenced by fonts.css
+ *   registry/styles/tokens.css                Tailwind v4 `@theme inline` mapping of every token
+ *   registry/angular/ui/icon/icon-glyphs.ts   glyph name -> code point maps for the icon fonts
  *
  * Naming rule (one rule for every token): drop the `sap` prefix, split camelCase and `_`,
  * lower-case, join with `-`, then prefix with `sap-` inside the Tailwind namespace.
@@ -166,7 +166,7 @@ for (const theme of THEMES) {
             .sort()
             .map((k) => `    '${k}': ${map[k].rtl ? `[0x${map[k].c.toString(16)}, 1]` : `0x${map[k].c.toString(16)}`},`)
             .join('\n');
-    const dir = join(root, 'registry/ui/icon');
+    const dir = join(root, 'registry/angular/ui/icon');
     mkdirSync(dir, { recursive: true });
     writeFileSync(
         join(dir, 'icon-glyphs.ts'),

@@ -1,0 +1,23 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "paths": {
+      "@/lib/utils": ["../lib/utils"],
+      "@/lib/*": ["./lib/*"],
+      "@/ui/*": ["./ui/*"]
+    },
+    "rootDir": "..",
+    "outDir": "../../dist/out-tsc/angular",
+    "experimentalDecorators": true,
+    "importHelpers": true
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true,
+    "typeCheckHostBindings": true
+  },
+  "include": ["**/*.ts", "../lib/*.ts"],
+  "exclude": ["**/*.stories.ts", "**/*.spec.ts", "../lib/*.spec.ts"]
+}

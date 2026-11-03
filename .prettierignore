@@ -3,5 +3,5 @@ dist
 registry/styles/themes
 registry/styles/tokens.css
 registry/styles/fonts.css
-registry/ui/icon/icon-glyphs.ts
+registry/angular/ui/icon/icon-glyphs.ts
 public/r

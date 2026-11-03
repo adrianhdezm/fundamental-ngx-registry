@@ -1,0 +1,10 @@
+{
+  "extends": "../../registry/angular/tsconfig.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true
+  },
+  "exclude": ["../../registry/angular/**/*.spec.ts"],
+  "include": ["../../registry/angular/**/*.ts", "../../registry/lib/*.ts", "./*.ts"]
+}

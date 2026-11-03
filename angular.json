@@ -7,15 +7,15 @@
     "ui": {
       "projectType": "library",
       "root": "",
-      "sourceRoot": "registry",
+      "sourceRoot": "registry/angular",
       "prefix": "fd",
       "architect": {
         "storybook": {
           "builder": "@analogjs/storybook-angular:start-storybook",
           "options": {
-            "configDir": ".storybook",
-            "tsConfig": ".storybook/tsconfig.json",
-            "styles": [".storybook/styles.css"],
+            "configDir": ".storybook/angular",
+            "tsConfig": ".storybook/angular/tsconfig.json",
+            "styles": [".storybook/angular/styles.css"],
             "experimentalZoneless": true,
             "compodoc": false,
             "port": 6006
@@ -24,9 +24,9 @@
         "build-storybook": {
           "builder": "@analogjs/storybook-angular:build-storybook",
           "options": {
-            "configDir": ".storybook",
-            "tsConfig": ".storybook/tsconfig.json",
-            "styles": [".storybook/styles.css"],
+            "configDir": ".storybook/angular",
+            "tsConfig": ".storybook/angular/tsconfig.json",
+            "styles": [".storybook/angular/styles.css"],
             "experimentalZoneless": true,
             "compodoc": false,
             "outputDir": "dist/storybook"
