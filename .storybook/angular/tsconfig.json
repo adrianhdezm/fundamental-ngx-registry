@@ -6,5 +6,5 @@
     "resolveJsonModule": true
   },
   "exclude": ["../../registry/angular/**/*.spec.ts"],
-  "include": ["../../registry/angular/**/*.ts", "../../registry/lib/*.ts", "./*.ts"]
+  "include": ["../../registry/angular/**/*.ts", "../../registry/lib/*.ts", "./*.ts", "../*.ts"]
 }

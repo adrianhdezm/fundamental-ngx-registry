@@ -1,0 +1,11 @@
+@import 'tailwindcss';
+@import '../../registry/styles/fundamental.css';
+
+@source '../../registry/react';
+@source '../../registry/lib';
+@source './';
+
+body {
+    min-height: 100vh;
+    background-color: var(--sapBackgroundColor);
+}

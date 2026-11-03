@@ -3,8 +3,7 @@ import tailwindcss from '@tailwindcss/vite';
 import remarkGfm from 'remark-gfm';
 import { fileURLToPath } from 'node:url';
 import { mergeConfig, type UserConfig } from 'vite';
-
-const registry = (path: string) => fileURLToPath(new URL(`../../registry/${path}`, import.meta.url));
+import { registryAliases } from '../aliases';
 
 const config: StorybookConfig = {
     stories: [
@@ -26,6 +25,10 @@ const config: StorybookConfig = {
         // the preset looks for .storybook/tsconfig.json otherwise (the Vitest addon runs without angular.json)
         options: { tsconfig: fileURLToPath(new URL('./tsconfig.json', import.meta.url)) }
     },
+    // the React Storybook, composed into this one: `pnpm storybook` serves it on 6007, the build puts it under react/
+    refs: {
+        react: { title: 'React', url: process.env['STORYBOOK_REACT_URL'] ?? 'http://localhost:6007' }
+    },
     // serves the built registries at /r/<framework>/<name>.json next to the stories
     staticDirs: [{ from: '../../public', to: '/' }],
     core: {
@@ -34,14 +37,7 @@ const config: StorybookConfig = {
     async viteFinal(config: UserConfig) {
         return mergeConfig(config, {
             plugins: [tailwindcss()],
-            // same aliases as the tsconfig `paths`, the ones users configure when copying components
-            resolve: {
-                alias: [
-                    { find: /^@\/lib\/utils$/, replacement: registry('lib/utils') },
-                    { find: /^@\/lib\//, replacement: registry('angular/lib/') },
-                    { find: /^@\/ui\//, replacement: registry('angular/ui/') }
-                ]
-            }
+            resolve: { alias: registryAliases('angular') }
         });
     }
 };

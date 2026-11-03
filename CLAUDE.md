@@ -1,8 +1,9 @@
 # fundamental-ngx-registry
 
 SAP Fiori Horizon components distributed shadcn-style (copy-paste source), one registry per framework under
-`registry/<framework>/`. Each Angular component is a port of `@fundamental-ngx/core` (behaviour, ARIA, keyboard), with
-the visuals of fundamental-styles rebuilt as Tailwind v4 utilities on the `@sap-theming/theming-base-content` tokens.
+`registry/<framework>/`. Each Angular component is a port of `@fundamental-ngx/core` and each React component a port of
+`fundamental-react` (behaviour, ARIA, keyboard), with the visuals of fundamental-styles rebuilt as Tailwind v4
+utilities on the `@sap-theming/theming-base-content` tokens.
 The theme (`registry/styles/`) and `registry/lib/utils.ts` are shared by the frameworks. See `README.md` for the
 layout and usage.
 
@@ -27,9 +28,11 @@ pnpm check                                  # everything below; takes about 5 mi
 pnpm typecheck && pnpm typecheck:tests      # strict templates for sources and specs
 pnpm check:styles                           # SAP token classes
 pnpm registry:check                         # each registry/<framework>/registry.json and each component's imports
-pnpm test                                   # component and lib tests (Vitest browser mode, project "angular")
+pnpm test                                   # component and lib tests (Vitest browser mode, projects "angular" and "react")
 pnpm test:a11y                              # axe on every story, Horizon and Horizon HC Black
 pnpm exec vitest run --project angular registry/angular/ui/menu/   # one component; keep the trailing slash
+pnpm exec vitest run --project react registry/react/ui/button/
+pnpm exec vitest run --project "a11y:react:*" registry/react/ui/button/   # axe on one component's stories
 pnpm format                                 # Prettier
 pnpm storybook                              # http://localhost:6006
 ```
@@ -41,6 +44,14 @@ pnpm storybook                              # http://localhost:6006
   imports). Imports use the aliases `@/ui/*` and `@/lib/*`.
 - Standalone, signal inputs/models/outputs, `ChangeDetectionStrategy.OnPush`, zoneless. Behaviour from the Angular
   CDK; ARIA and keyboard handling ported from `@fundamental-ngx/core`.
+- React: one folder per component: `registry/react/ui/<name>/<name>.tsx`, `<name>.spec.tsx`, `<name>.stories.tsx`,
+  `index.ts`, and an entry in `registry/react/registry.json`; the item name is the Angular one (`ButtonSegmented` →
+  `segmented-button`). Function components with React 19 `ref` props and fundamental-react's props, typed in
+  TypeScript. The Tailwind classes are the Angular component's. Complex behaviour (overlays, menus, listboxes,
+  selects) builds on unstyled Base UI (`@base-ui/react`), the React counterpart of the Angular CDK.
+- Port one React component per pull request: every upstream story and test, then a comparison with the Angular
+  component in `docs/parity/react/components/<name>.md`, the browser tests and axe run of that component, and a
+  side-by-side look at the React and Angular stories in Storybook (themes, density, RTL).
 - Every source file keeps its attribution header (ported from, copyright, Apache-2.0).
 - Styling: Tailwind classes on SAP tokens only (`bg-sap-button-hover-background`, see README "Token utilities"); no
   hard-coded colours or sizes where a token exists. Class strings must be literal for Tailwind to find them: no

@@ -1,16 +1,15 @@
 # fundamental-ngx-registry
 
-SAP Fiori Horizon components as copy-paste source files, with one registry per framework. The Angular registry is
-complete; a React registry is being added next to it.
+SAP Fiori Horizon components as copy-paste source files, with one registry per framework: Angular (complete) and
+React (being ported component by component, see [the React parity report](docs/parity/react/README.md)).
 
 **Storybook:** https://adrianhdezm.github.io/fundamental-ngx-registry/ (the registries are served from the same site
 under `/r/<framework>/<name>.json`, for example `/r/angular/button.json`).
 
-- **Unofficial port of [`@fundamental-ngx/core`](https://sap.github.io/fundamental-ngx/#/core/home)** (Apache-2.0, see [License and attribution](#license-and-attribution)): same behaviour, ARIA and keyboard handling. Not ported: the legacy avatar group and the table.
-- **Styled with Tailwind CSS v4** on the SAP theme tokens from [`@sap-theming/theming-base-content`](https://github.com/SAP/theming-base-content). No fundamental-styles CSS at runtime.
-- **Behaviour from the Angular CDK** (a11y, overlay, bidi, ...).
-- **Modern Angular**: standalone, signals, `input()`/`model()`/`output()`, OnPush, zoneless.
-- **shadcn-style distribution**: copy `registry/angular/ui/<name>/` into your app, or `npx shadcn add <registry-url>/r/angular/<name>.json`.
+- **Angular: unofficial port of [`@fundamental-ngx/core`](https://sap.github.io/fundamental-ngx/#/core/home)** (Apache-2.0, see [License and attribution](#license-and-attribution)): same behaviour, ARIA and keyboard handling, with the Angular CDK, standalone components, signals, OnPush and zoneless. Not ported: the legacy avatar group and the table.
+- **React: unofficial port of [fundamental-react](https://github.com/SAP/fundamental-react)** (Apache-2.0): same props and behaviour, rewritten for React 19 and TypeScript. Overlays and other complex behaviour build on the unstyled [Base UI](https://base-ui.com) components.
+- **Styled with Tailwind CSS v4** on the SAP theme tokens from [`@sap-theming/theming-base-content`](https://github.com/SAP/theming-base-content), the same classes in both frameworks. No fundamental-styles CSS at runtime.
+- **shadcn-style distribution**: copy `registry/<framework>/ui/<name>/` into your app, or `npx shadcn add <registry-url>/r/<framework>/<name>.json`.
 - **Themes**: Horizon, Horizon Dark, Horizon HC Black, Horizon HC White. **Density**: cozy, compact (and condensed). **RTL**.
 
 ## Repository layout
@@ -28,8 +27,12 @@ registry/
     tsconfig.json         strict Angular compiler settings and the @/ui, @/lib aliases
     lib/                  Angular libs (datetime)
     ui/<component>/       one self-contained folder per component (+ its spec and stories)
-.storybook/angular/       Storybook of the Angular registry (Analog builder)
-tests/angular/            setup and tsconfig of the Angular component tests
+  react/                  the same for React: registry.json, tsconfig.json, ui/<component>/<component>.tsx
+.storybook/
+  angular/                Storybook of the Angular registry (Analog builder); composes the React one
+  react/                  Storybook of the React registry (React + Vite)
+  foundation.ts, ...      theme, density and direction toolbars, aliases and a11y helpers shared by both
+tests/<framework>/        setup and tsconfig of each framework's component tests
 scripts/
   generate-tokens.mjs     regenerates styles/ and the icon glyph map from theming-base-content
   build-registry.mjs      builds public/r/<framework>/*.json and checks each component's imports
@@ -44,15 +47,17 @@ Playwright and Chromium of the dev dependencies (`pnpm exec playwright install c
 
 ```sh
 pnpm install
-pnpm storybook          # http://localhost:6006
+pnpm storybook          # Angular on http://localhost:6006 with React composed in; React alone on :6007
 pnpm build-storybook    # dist/storybook, including the registries under /r/<framework>
 pnpm check              # typecheck (strict templates), style and registry checks, tests, a11y
-pnpm test               # component tests in Chromium (Vitest browser mode); specs next to each component
+pnpm test               # component tests of both frameworks in Chromium (Vitest browser mode); specs next to each component
 pnpm test:a11y          # every story rendered by Vitest and checked with axe, in Horizon and Horizon HC Black
 pnpm tokens             # regenerate the theme layer after bumping theming-base-content
 ```
 
 ## Using the components in an app
+
+The steps below are for Angular. For React, see [React](#react).
 
 ### With the shadcn CLI
 
@@ -139,6 +144,31 @@ import { Button } from '@/ui/button/button'; // '@/components/ui/button/button' 
     imports: [Button],
     template: `<button fdButton variant="emphasized" label="Save" (click)="save()"></button>`
 })
+```
+
+### React
+
+The React registry is published at `https://adrianhdezm.github.io/fundamental-ngx-registry/r/react/<name>.json`. Set
+up Tailwind CSS v4 and the `@/*` path alias as for any shadcn/ui app, add a `components.json` with the same `aliases`
+as above (`"tsx": true`), then:
+
+```sh
+npx shadcn add https://adrianhdezm.github.io/fundamental-ngx-registry/r/react/button.json
+```
+
+The first component adds the theme import after Tailwind (no CDK styles in React):
+
+```css
+@import 'tailwindcss';
+@import './styles/fundamental.css';
+```
+
+```tsx
+import { Button } from '@/components/ui/button/button';
+
+<Button option="emphasized" onClick={save}>
+  Save
+</Button>;
 ```
 
 ## Token utilities

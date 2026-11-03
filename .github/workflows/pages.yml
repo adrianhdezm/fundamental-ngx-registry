@@ -29,6 +29,9 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm build-storybook
+        env:
+          # the Angular Storybook composes the React one, built into dist/storybook/react
+          STORYBOOK_REACT_URL: https://adrianhdezm.github.io/fundamental-ngx-registry/react
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

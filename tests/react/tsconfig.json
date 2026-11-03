@@ -1,0 +1,15 @@
+{
+  "extends": "../../registry/react/tsconfig.json",
+  "compilerOptions": {
+    "types": ["vitest/importMeta"],
+    "rootDir": "../.."
+  },
+  "include": [
+    "../../registry/react/**/*.ts",
+    "../../registry/react/**/*.tsx",
+    "../../registry/lib/*.ts",
+    "./*.ts",
+    "../env.d.ts"
+  ],
+  "exclude": []
+}

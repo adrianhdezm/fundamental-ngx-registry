@@ -31,7 +31,8 @@ const FONT_CDN = `https://cdn.jsdelivr.net/npm/@sap-theming/theming-base-content
 
 /** Imports a component may use without listing them in `dependencies`: the framework and what it brings along. */
 const FRAMEWORKS = {
-    angular: /^(@angular\/|rxjs|tslib)/
+    angular: /^(@angular\/|rxjs|tslib)/,
+    react: /^(react|react-dom)(\/|$)/
 };
 
 const errors = [];

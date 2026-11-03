@@ -2,25 +2,11 @@ import { setProjectAnnotations } from '@analogjs/storybook-angular/testing';
 import * as a11yAnnotations from '@storybook/addon-a11y/preview';
 import type { StoryContext } from '@analogjs/storybook-angular';
 import { beforeAll } from 'vitest';
+import { contrastInHighContrast } from '../a11y';
 import preview from './preview';
 
 /** The theme of this test project, from `vitest.config.ts`. */
 declare const __A11Y_THEME__: string;
-
-interface A11yRule {
-    id: string;
-    enabled?: boolean;
-}
-
-/**
- * Stories turn off colour contrast where Horizon's own colours are below 4.5:1 by design; the high-contrast
- * themes are made for that check, so it runs there in any case.
- */
-function contrastInHighContrast(context: StoryContext): void {
-    const config = context.parameters['a11y']?.config;
-    if (!__A11Y_THEME__.includes('_hc') || !config?.rules) return;
-    config.rules = (config.rules as A11yRule[]).filter((rule) => rule.id !== 'color-contrast');
-}
 
 /**
  * Each story renders into a new canvas, so overlays (dialogs, menus, popovers) opened by an earlier story would
@@ -41,7 +27,7 @@ const project = setProjectAnnotations([
         initialGlobals: { theme: __A11Y_THEME__ },
         parameters: { a11y: { test: 'error' } },
         beforeEach: (context: StoryContext) => {
-            contrastInHighContrast(context);
+            contrastInHighContrast(__A11Y_THEME__, context.parameters);
             return removeOverlays();
         }
     }

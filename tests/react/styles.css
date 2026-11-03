@@ -1,0 +1,5 @@
+@import 'tailwindcss';
+@import '../../registry/styles/fundamental.css';
+
+@source '../../registry/react';
+@source '../../registry/lib';

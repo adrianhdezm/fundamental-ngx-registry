@@ -40,16 +40,32 @@ await userEvent.keyboard('{ArrowDown}');
 expect(document.activeElement).toBe(items()[3]);
 ```
 
+### React
+
+React specs (`registry/react/ui/<name>/<name>.spec.tsx`, project `react`) render with `render` from
+`vitest-browser-react` and change props with `screen.rerender(...)`; both are async. Keep state that the test changes
+in a small host component with `useState`. Playwright does not click elements with `aria-disabled="true"`: pass
+`{ force: true }` to check that such a click is ignored.
+
+```tsx
+import { render } from 'vitest-browser-react';
+
+const screen = await render(<Button selected>Bold</Button>);
+await expect.element(screen.getByRole('button', { name: 'Bold', pressed: true })).toBeInTheDocument();
+```
+
 ## Accessibility
 
 `pnpm test:a11y` runs every story as a Vitest test through Storybook's Vitest addon (`@storybook/addon-vitest`):
 the story is rendered, its `play` function runs (stories named "Open: …" open their overlay there), and the a11y
 addon checks the page with axe. Any violation fails the test. The check runs once per theme, in Horizon and in
-Horizon High Contrast Black (the `a11y:angular:<theme>` projects in `vitest.config.ts`); `.storybook/angular/vitest.setup.ts` sets the
-theme and removes overlays left open by the previous story.
+Horizon High Contrast Black (the `a11y:<framework>:<theme>` projects in `vitest.config.ts`);
+`.storybook/<framework>/vitest.setup.ts` sets the theme (and, for Angular, removes overlays left open by the previous
+story).
 
 ```sh
 pnpm exec vitest run --project a11y:angular:sap_horizon registry/angular/ui/menu/   # one theme, one component
+pnpm exec vitest run --project "a11y:react:*" registry/react/ui/button/             # both themes, React
 ```
 
 A story can turn a rule off with `parameters.a11y.config.rules`, for example colour contrast where Horizon's own

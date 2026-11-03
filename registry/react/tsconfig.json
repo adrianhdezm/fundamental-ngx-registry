@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "paths": {
+      "@/lib/utils": ["../lib/utils"],
+      "@/lib/*": ["./lib/*"],
+      "@/ui/*": ["./ui/*"]
+    },
+    "rootDir": "..",
+    "jsx": "react-jsx",
+    "noEmit": true
+  },
+  "include": ["**/*.ts", "**/*.tsx", "../lib/*.ts"],
+  "exclude": ["**/*.stories.tsx", "**/*.spec.tsx", "../lib/*.spec.ts"]
+}

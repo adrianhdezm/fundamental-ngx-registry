@@ -1,0 +1,16 @@
+{
+  "extends": "../../registry/react/tsconfig.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "rootDir": "../.."
+  },
+  "include": [
+    "../../registry/react/**/*.ts",
+    "../../registry/react/**/*.tsx",
+    "../../registry/lib/*.ts",
+    "./*.ts",
+    "./*.tsx",
+    "../*.ts"
+  ],
+  "exclude": ["../../registry/react/**/*.spec.tsx"]
+}

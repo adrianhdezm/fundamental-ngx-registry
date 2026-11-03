@@ -11,6 +11,12 @@ licensed under the Apache License, Version 2.0:
   handling, ARIA, APIs and parts of their logic. They were rewritten (Angular signals, the
   Angular CDK, Tailwind CSS); each ported file states this in its header.
 
+- fundamental-react, https://github.com/SAP/fundamental-react
+  Copyright (c) 2018-2020 SAP SE or an SAP affiliate company and fundamental-react contributors.
+  The components in registry/react/ui are ports of its components: their props, behaviour
+  and ARIA. They were rewritten (React 19, TypeScript, Tailwind CSS); each ported file
+  states this in its header.
+
 - fundamental-styles, https://github.com/SAP/fundamental-styles
   Copyright (c) SAP SE or an SAP affiliate company and Fundamental Library contributors.
   The visual design of the components (sizes, spacing, states, per-theme values) follows
@@ -22,7 +28,7 @@ licensed under the Apache License, Version 2.0:
   Copyright (c) SAP SE or an SAP affiliate company.
   registry/styles/themes, registry/styles/tokens.css, registry/styles/fonts.css,
   registry/styles/fonts (the "72" typeface and the SAP icon fonts) and
-  registry/angular/ui/icon/icon-glyphs.ts are generated from or copied out of this package.
+  registry/<framework>/ui/icon/icon-glyphs.ts are generated from or copied out of this package.
 
 - UI5 Web Components for Fiori (@ui5/webcomponents-fiori), https://github.com/UI5/webcomponents
   Copyright (c) SAP SE or an SAP affiliate company.

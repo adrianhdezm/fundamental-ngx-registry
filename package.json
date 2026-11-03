@@ -8,18 +8,20 @@
   "scripts": {
     "tokens": "node scripts/generate-tokens.mjs",
     "registry:build": "node scripts/build-registry.mjs",
-    "storybook": "pnpm registry:build && ng run ui:storybook",
-    "build-storybook": "pnpm registry:build && ng run ui:build-storybook",
-    "typecheck": "ngc -p registry/angular/tsconfig.json --noEmit",
-    "typecheck:tests": "ngc -p tests/angular/tsconfig.json --noEmit",
+    "storybook": "pnpm registry:build && pnpm run \"/^storybook:/\"",
+    "storybook:angular": "ng run ui:storybook",
+    "storybook:react": "storybook dev -c .storybook/react -p 6007 --no-open",
+    "build-storybook": "pnpm registry:build && ng run ui:build-storybook && storybook build -c .storybook/react -o dist/storybook/react",
+    "typecheck": "ngc -p registry/angular/tsconfig.json --noEmit && tsc -p registry/react/tsconfig.json",
+    "typecheck:tests": "ngc -p tests/angular/tsconfig.json --noEmit && tsc -p tests/react/tsconfig.json --noEmit && tsc -p .storybook/react/tsconfig.json --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "check:styles": "node scripts/check-styles.mjs",
     "registry:check": "node scripts/build-registry.mjs --check",
     "check": "pnpm typecheck && pnpm typecheck:tests && pnpm check:styles && pnpm registry:check && pnpm test && pnpm test:a11y",
-    "test": "vitest run --project angular",
-    "test:watch": "vitest --project angular",
-    "test:a11y": "node --max-old-space-size=6144 node_modules/vitest/vitest.mjs run --project a11y:angular:sap_horizon && node --max-old-space-size=6144 node_modules/vitest/vitest.mjs run --project a11y:angular:sap_horizon_hcb"
+    "test": "vitest run --project angular --project react",
+    "test:watch": "vitest --project angular --project react",
+    "test:a11y": "node --max-old-space-size=6144 node_modules/vitest/vitest.mjs run --project a11y:angular:sap_horizon && node --max-old-space-size=6144 node_modules/vitest/vitest.mjs run --project a11y:angular:sap_horizon_hcb && vitest run --project \"a11y:react:*\""
   },
   "dependencies": {
     "@angular/animations": "^22.2.3",
@@ -31,6 +33,8 @@
     "@angular/platform-browser": "^22.2.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "rxjs": "^7.8.2",
     "tailwind-merge": "^3.7.0",
     "tslib": "^2.8.1"
@@ -47,9 +51,13 @@
     "@storybook/addon-docs": "^10.6.4",
     "@storybook/addon-vitest": "10.6.4",
     "@storybook/angular": "^10.6.4",
+    "@storybook/react-vite": "10.6.4",
     "@tailwindcss/oxide": "4.3.3",
     "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^26.6.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.2.1",
     "@vitest/browser-playwright": "5.0.5",
     "axe-core": "4.14.0",
     "playwright": "1.63.0",
@@ -59,7 +67,8 @@
     "tailwindcss": "^4.3.3",
     "typescript": "~6.0.0",
     "vite": "^8.3.5",
-    "vitest": "5.0.5"
+    "vitest": "5.0.5",
+    "vitest-browser-react": "2.3.0"
   },
   "engines": {
     "node": ">=22.22.3"
