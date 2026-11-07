@@ -199,6 +199,24 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "Single-line and multi-line text fields with value states, read-only and disabled styles, and a character counter. On Base UI's Input.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils", "theme"],
+      "files": [
+        {
+          "path": "registry/ui/input/input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/input/index.ts",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

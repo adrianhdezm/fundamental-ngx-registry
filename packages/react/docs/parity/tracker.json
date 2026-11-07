@@ -227,7 +227,9 @@
       "phase": 1,
       "source": ["src/Forms/__stories__/FormInput.stories.js", "src/Forms/__stories__/FormTextarea.stories.js"],
       "sourceStories": 15,
-      "status": "todo"
+      "status": "done",
+      "visual": "352/352",
+      "notes": "value state message, inline help stories and their tests: after form"
     },
     {
       "name": "input-group",
