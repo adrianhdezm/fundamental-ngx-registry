@@ -5,7 +5,9 @@
       "phase": 1,
       "source": ["src/ActionBar/__stories__/ActionBar.stories.js"],
       "sourceStories": 7,
-      "status": "todo"
+      "status": "done",
+      "visual": "204/208",
+      "notes": "overflow menu, Open: contextual menu / mobile stories and the menu test: after menu; 4 RTL compact diffs kept (back arrow mirrors, as Fiori)"
     },
     {
       "name": "action-sheet",

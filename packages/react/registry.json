@@ -139,6 +139,24 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "action-bar",
+      "type": "registry:ui",
+      "title": "Action Bar",
+      "description": "The header of a page with a back button, title, description and page actions.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils", "theme", "title"],
+      "files": [
+        {
+          "path": "registry/ui/action-bar/action-bar.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/action-bar/index.ts",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
