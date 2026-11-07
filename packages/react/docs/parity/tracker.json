@@ -1,0 +1,583 @@
+{
+  "components": [
+    {
+      "name": "action-bar",
+      "phase": 1,
+      "source": ["src/ActionBar/__stories__/ActionBar.stories.js"],
+      "sourceStories": 7,
+      "status": "done",
+      "visual": "204/208",
+      "notes": "overflow menu, Open: contextual menu / mobile stories and the menu test: after menu; 4 RTL compact diffs kept (back arrow mirrors, as Fiori)"
+    },
+    {
+      "name": "action-sheet",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "avatar",
+      "phase": 1,
+      "source": ["src/Avatar/__stories__/Avatar.stories.js"],
+      "sourceStories": 12,
+      "status": "todo"
+    },
+    {
+      "name": "avatar-group",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "bar",
+      "phase": 1,
+      "source": ["src/Bar/__stories__/Bar.stories.js"],
+      "sourceStories": 7,
+      "status": "todo"
+    },
+    {
+      "name": "breadcrumb",
+      "phase": 1,
+      "source": ["src/Breadcrumb/__stories__/Breadcrumb.stories.js"],
+      "sourceStories": 3,
+      "status": "todo"
+    },
+    {
+      "name": "busy-indicator",
+      "phase": 1,
+      "source": ["src/BusyIndicator/__stories__/BusyIndicator.stories.js"],
+      "sourceStories": 4,
+      "status": "done",
+      "visual": "128/128",
+      "notes": "message toast stories: after message-toast"
+    },
+    {
+      "name": "button",
+      "phase": 1,
+      "source": ["src/Button/__stories__/Button.stories.js"],
+      "sourceStories": 9,
+      "status": "done",
+      "visual": "256/256",
+      "notes": "aria-haspopup/expanded with a menu trigger: after menu"
+    },
+    {
+      "name": "calendar",
+      "phase": 1,
+      "source": ["src/Calendar/__stories__/Calendar.stories.js"],
+      "sourceStories": 10,
+      "status": "todo"
+    },
+    {
+      "name": "card",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "carousel",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "checkbox",
+      "phase": 1,
+      "source": ["src/Forms/__stories__/Checkbox.stories.js"],
+      "sourceStories": 9,
+      "status": "todo"
+    },
+    {
+      "name": "combobox",
+      "phase": 1,
+      "source": ["src/ComboboxInput/__stories__/ComboboxInput.stories.js"],
+      "sourceStories": 12,
+      "status": "todo"
+    },
+    {
+      "name": "content-density",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "counter",
+      "phase": 1,
+      "source": ["src/Counter/__stories__/Counter.stories.js"],
+      "sourceStories": 5,
+      "status": "done",
+      "visual": "208/208",
+      "notes": "fundamental-styles Tabs example: after tabs"
+    },
+    {
+      "name": "date-picker",
+      "phase": 1,
+      "source": ["src/DatePicker/__stories__/DatePicker.stories.js"],
+      "sourceStories": 19,
+      "status": "todo"
+    },
+    {
+      "name": "datetime-picker",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "dialog",
+      "phase": 1,
+      "source": ["src/Dialog/__stories__/Dialog.stories.js"],
+      "sourceStories": 10,
+      "status": "todo"
+    },
+    {
+      "name": "dynamic-page",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "dynamic-side-content",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "facets",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "feed-input",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "feed-list",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "file-uploader",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "fixed-card-layout",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "flexible-column-layout",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "form",
+      "phase": 1,
+      "source": [
+        "src/Forms/__stories__/FormFieldset.stories.js",
+        "src/Forms/__stories__/FormGroup.stories.js",
+        "src/Forms/__stories__/FormItem.stories.js",
+        "src/Forms/__stories__/FormLabel.stories.js",
+        "src/Forms/__stories__/FormLegend.stories.js"
+      ],
+      "sourceStories": 18,
+      "status": "todo"
+    },
+    {
+      "name": "formatted-text",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "generic-tag",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "grid-list",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "icon",
+      "phase": 1,
+      "source": ["src/Icon/__stories__/Icon.stories.js"],
+      "sourceStories": 4,
+      "status": "done",
+      "visual": "96/96"
+    },
+    {
+      "name": "illustrated-message",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "infinite-scroll",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "info-label",
+      "phase": 1,
+      "source": ["src/InfoLabel/__stories__/InfoLabel.stories.js"],
+      "sourceStories": 6,
+      "status": "todo"
+    },
+    {
+      "name": "inline-help",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "input",
+      "phase": 1,
+      "source": ["src/Forms/__stories__/FormInput.stories.js", "src/Forms/__stories__/FormTextarea.stories.js"],
+      "sourceStories": 15,
+      "status": "todo"
+    },
+    {
+      "name": "input-group",
+      "phase": 1,
+      "source": ["src/InputGroup/__stories__/InputGroup.stories.js"],
+      "sourceStories": 10,
+      "status": "todo"
+    },
+    {
+      "name": "layout-grid",
+      "phase": 1,
+      "source": ["src/LayoutGrid/__stories__/LayoutGrid.stories.js"],
+      "sourceStories": 8,
+      "status": "done",
+      "visual": "400/400",
+      "notes": "fundamental-react's auto-span of unspanned columns is `colGrow` (no children cloning)"
+    },
+    {
+      "name": "layout-panel",
+      "phase": 1,
+      "source": ["src/LayoutPanel/__stories__/LayoutPanel.stories.js"],
+      "sourceStories": 4,
+      "status": "todo"
+    },
+    {
+      "name": "link",
+      "phase": 1,
+      "source": ["src/Link/__stories__/Link.stories.js"],
+      "sourceStories": 4,
+      "status": "done",
+      "visual": "112/112"
+    },
+    {
+      "name": "list",
+      "phase": 1,
+      "source": ["src/List/__stories__/List.stories.js"],
+      "sourceStories": 14,
+      "status": "todo"
+    },
+    {
+      "name": "menu",
+      "phase": 1,
+      "source": ["src/Menu/__stories__/Menu.stories.js"],
+      "sourceStories": 5,
+      "status": "todo"
+    },
+    {
+      "name": "message-box",
+      "phase": 1,
+      "source": ["src/MessageBox/__stories__/MessageBox.stories.js"],
+      "sourceStories": 3,
+      "status": "todo"
+    },
+    {
+      "name": "message-page",
+      "phase": 1,
+      "source": ["src/MessagePage/__stories__/MessagePage.stories.js"],
+      "sourceStories": 3,
+      "status": "todo"
+    },
+    {
+      "name": "message-strip",
+      "phase": 1,
+      "source": ["src/MessageStrip/__stories__/MessageStrip.stories.js"],
+      "sourceStories": 7,
+      "status": "todo"
+    },
+    {
+      "name": "message-toast",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "micro-process-flow",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "multi-combobox",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "multi-input",
+      "phase": 1,
+      "source": ["src/MultiInput/__stories__/MultiInput.stories.js"],
+      "sourceStories": 6,
+      "status": "todo"
+    },
+    {
+      "name": "nested-list",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "notification",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "object-attribute",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "object-identifier",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "object-marker",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "object-number",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "object-status",
+      "phase": 1,
+      "source": ["src/ObjectStatus/__stories__/ObjectStatus.stories.js"],
+      "sourceStories": 10,
+      "status": "todo"
+    },
+    {
+      "name": "overflow-layout",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "pagination",
+      "phase": 1,
+      "source": ["src/Pagination/__stories__/Pagination.stories.js"],
+      "sourceStories": 11,
+      "status": "todo"
+    },
+    {
+      "name": "panel",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "popover",
+      "phase": 1,
+      "source": ["src/Popover/__stories__/Popover.stories.js"],
+      "sourceStories": 8,
+      "status": "todo"
+    },
+    {
+      "name": "product-switch",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "progress-indicator",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "quick-view",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "radio",
+      "phase": 1,
+      "source": ["src/Forms/__stories__/FormRadioGroup.stories.js"],
+      "sourceStories": 7,
+      "status": "todo"
+    },
+    {
+      "name": "rating-indicator",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "resizable-card-layout",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "scroll-spy",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "scrollbar",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "search-input",
+      "phase": 1,
+      "source": ["src/SearchInput/__stories__/SearchInput.stories.js"],
+      "sourceStories": 7,
+      "status": "todo"
+    },
+    {
+      "name": "segmented-button",
+      "phase": 1,
+      "source": ["src/Button/__stories__/ButtonSegmented.stories.js"],
+      "sourceStories": 3,
+      "status": "todo"
+    },
+    {
+      "name": "select",
+      "phase": 1,
+      "source": ["src/Select/__stories__/Select.stories.js"],
+      "sourceStories": 8,
+      "status": "todo"
+    },
+    {
+      "name": "settings",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "shellbar",
+      "phase": 1,
+      "source": ["src/Shellbar/__stories__/Shellbar.stories.js"],
+      "sourceStories": 6,
+      "status": "todo"
+    },
+    {
+      "name": "side-navigation",
+      "phase": 1,
+      "source": ["src/SideNavigation/__stories__/SideNav.stories.js"],
+      "sourceStories": 8,
+      "status": "todo"
+    },
+    {
+      "name": "skeleton",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "slider",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "split-button",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "status-indicator",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "step-input",
+      "phase": 1,
+      "source": ["src/StepInput/__stories__/StepInput.stories.js"],
+      "sourceStories": 7,
+      "status": "todo"
+    },
+    {
+      "name": "switch",
+      "phase": 1,
+      "source": ["src/Switch/__stories__/Switch.stories.js"],
+      "sourceStories": 9,
+      "status": "todo"
+    },
+    {
+      "name": "tabs",
+      "phase": 1,
+      "source": ["src/Tabs/__stories__/TabGroup.stories.js"],
+      "sourceStories": 7,
+      "status": "todo"
+    },
+    {
+      "name": "text",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "tile",
+      "phase": 1,
+      "source": ["src/Tile/__stories__/Tile.stories.js"],
+      "sourceStories": 5,
+      "status": "todo"
+    },
+    {
+      "name": "time",
+      "phase": 1,
+      "source": ["src/Time/__stories__/Time.stories.js"],
+      "sourceStories": 11,
+      "status": "todo"
+    },
+    {
+      "name": "time-picker",
+      "phase": 1,
+      "source": ["src/TimePicker/__stories__/TimePicker.stories.js"],
+      "sourceStories": 6,
+      "status": "todo"
+    },
+    {
+      "name": "timeline",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "title",
+      "phase": 1,
+      "source": ["src/Title/__stories__/Title.stories.js"],
+      "sourceStories": 5,
+      "status": "done",
+      "visual": "128/128"
+    },
+    {
+      "name": "token",
+      "phase": 1,
+      "source": ["src/Token/__stories__/Token.stories.js"],
+      "sourceStories": 5,
+      "status": "todo"
+    },
+    {
+      "name": "toolbar",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "tree",
+      "phase": 1,
+      "source": ["src/Tree/__stories__/Tree.stories.js"],
+      "sourceStories": 13,
+      "status": "todo"
+    },
+    {
+      "name": "upload-collection",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "user-menu",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "vertical-navigation",
+      "phase": 2,
+      "status": "todo"
+    },
+    {
+      "name": "wizard",
+      "phase": 1,
+      "source": ["src/Wizard/__stories__/Wizard.stories.js"],
+      "sourceStories": 14,
+      "status": "todo"
+    }
+  ]
+}
