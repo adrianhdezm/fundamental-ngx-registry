@@ -8,6 +8,8 @@
  *   ours      { story: Storybook story id, selector: Playwright selector of the element }
  *   ref       the same for https://sap.github.io/fundamental-styles/
  *   hover     hover the element before capturing
+ *   focus     focus our element with the keyboard (:focus-visible); fundamental-styles' stories usually show focus
+ *             with an `is-focus` class, so pick that element as `ref`, or set `refFocus` to focus it too
  *   pixels    false: compare computed styles only (e.g. when the texts differ)
  *   props     extra computed style properties to compare (e.g. margins)
  *   ignore    computed style properties (or "width") not to compare, with the reason in a comment

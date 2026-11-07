@@ -125,7 +125,7 @@ const refUrl = (story, c) =>
     `${FS_URL}/iframe.html?id=${story}&viewMode=story&globals=styles-theme:${c.theme};contentDensity:${c.density};directionality:${c.dir}`;
 
 /** Renders a story and returns the computed styles, size and screenshot of the element matched by `selector`. */
-async function capture(page, url, selector, hover, props) {
+async function capture(page, url, selector, hover, props, focus) {
     await page.goto(url, { waitUntil: 'networkidle' });
     await page.evaluate(() => document.fonts.ready);
     // the end state of every element: no animation (e.g. pulsing busy dots) or transition in progress
@@ -137,6 +137,11 @@ async function capture(page, url, selector, hover, props) {
     await el.waitFor({ state: 'visible', timeout: 15000 });
     if (hover) await el.hover();
     else await page.mouse.move(0, 0);
+    if (focus) {
+        // keyboard focus, so :focus-visible applies: Tab into the page, then focus the element
+        await page.keyboard.press('Tab');
+        await el.focus();
+    }
     // snap to whole pixels: an element at a fractional offset anti-aliases differently. A layout offset (relative
     // position) is snapped by Chromium; a transform is not. Absolutely positioned elements are left alone.
     await el.evaluate((node) => {
@@ -202,8 +207,16 @@ async function compare(page, name, kase, c) {
     const id = `${kase.label.replace(/\W+/g, '-')}--${c.key}`;
     try {
         const props = [...STYLE_PROPS, ...(kase.props ?? [])];
-        const ours = await capture(page, oursUrl(kase.ours.story, c), kase.ours.selector, kase.hover, props);
-        const ref = await capture(page, refUrl(kase.ref.story, c), kase.ref.selector, kase.hover, props);
+        const ours = await capture(
+            page,
+            oursUrl(kase.ours.story, c),
+            kase.ours.selector,
+            kase.hover,
+            props,
+            kase.focus
+        );
+        // fundamental-styles shows focus with an is-focus class in its stories; refFocus focuses the element too
+        const ref = await capture(page, refUrl(kase.ref.story, c), kase.ref.selector, kase.hover, props, kase.refFocus);
         writeFileSync(join(outDir, `${id}.ours.png`), PNG.sync.write(ours.png));
         writeFileSync(join(outDir, `${id}.ref.png`), PNG.sync.write(ref.png));
         const ignore = new Set(kase.ignore ?? []);
