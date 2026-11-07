@@ -50,7 +50,9 @@
       "phase": 1,
       "source": ["src/Button/__stories__/Button.stories.js"],
       "sourceStories": 9,
-      "status": "todo"
+      "status": "done",
+      "visual": "256/256",
+      "notes": "aria-haspopup/expanded with a menu trigger: after menu"
     },
     {
       "name": "calendar",

@@ -83,6 +83,20 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Buttons in every SAP type, with glyphs, menu arrow, toggled and selected states, badges and semantic descriptions for screen readers. On Base UI's Button.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils", "theme", "icon"],
+      "files": [
+        {
+          "path": "registry/ui/button/button.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
