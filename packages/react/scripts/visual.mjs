@@ -51,6 +51,7 @@ const STYLE_PROPS = [
     'letter-spacing',
     'text-transform',
     'text-decoration-line',
+    'text-underline-offset',
     'color',
     'background-color',
     'background-image',
