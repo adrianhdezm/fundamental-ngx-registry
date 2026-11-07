@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react';
 import { playwright } from '@vitest/browser-playwright';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitest/config';
+import baseUi from '@base-ui/react/package.json' with { type: 'json' };
 
 const path = (p: string) => fileURLToPath(new URL(p, import.meta.url));
 
@@ -29,6 +30,7 @@ const storybook = (theme: string) => ({
 // Component tests run in a real Chromium (Vitest browser mode), with the SAP theme and Tailwind styles.
 export default defineConfig({
     plugins: [react(), tailwindcss()],
+    // pre-bundle React and every Base UI entry point, so a newly imported one does not reload a running test
     optimizeDeps: {
         include: [
             'react',
@@ -36,8 +38,10 @@ export default defineConfig({
             'react-dom/client',
             'react/jsx-runtime',
             'react/jsx-dev-runtime',
-            '@base-ui/react',
-            'vitest-browser-react'
+            'vitest-browser-react',
+            ...Object.keys(baseUi.exports)
+                .filter((entry) => entry.startsWith('./') && !entry.includes('*') && !entry.endsWith('.json'))
+                .map((entry) => `@base-ui/react/${entry.slice(2)}`)
         ]
     },
     resolve: {

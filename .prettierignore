@@ -9,3 +9,4 @@ packages/react/registry/styles/themes
 packages/react/registry/styles/tokens.css
 packages/react/registry/styles/fonts.css
 packages/react/registry/ui/icon/icon-glyphs.ts
+packages/*/.visual

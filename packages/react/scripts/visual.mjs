@@ -13,6 +13,7 @@
  *   pnpm build-storybook                     # our Storybook, served from dist/storybook by this script
  *   pnpm visual <name> [<name> ...]          # or `pnpm visual --all`
  *   pnpm visual button --only=sap_horizon    # limit to combinations whose key contains the text
+ *   VISUAL_WORKERS=6                         # pages rendering in parallel (default 6)
  *
  * The reference is https://sap.github.io/fundamental-styles/ (override with FS_URL).
  */
@@ -126,10 +127,22 @@ const refUrl = (story, c) =>
 async function capture(page, url, selector, hover) {
     await page.goto(url, { waitUntil: 'networkidle' });
     await page.evaluate(() => document.fonts.ready);
-    const el = page.locator(selector).first();
+    // inside the story: Storybook's own (hidden) controls are elsewhere in the iframe
+    const el = page.locator('#storybook-root').locator(selector).first();
     await el.waitFor({ state: 'visible', timeout: 15000 });
     if (hover) await el.hover();
     else await page.mouse.move(0, 0);
+    // snap to whole pixels: an element at a fractional offset anti-aliases differently. A layout offset (relative
+    // position) is snapped by Chromium; a transform is not. Absolutely positioned elements are left alone.
+    await el.evaluate((node) => {
+        const style = getComputedStyle(node);
+        if (style.position !== 'static' && style.position !== 'relative') return;
+        node.style.transition = 'none';
+        const box = node.getBoundingClientRect();
+        node.style.position = 'relative';
+        node.style.top = `${(parseFloat(style.top) || 0) - (box.y % 1)}px`;
+        node.style.left = `${(parseFloat(style.left) || 0) - (box.x % 1)}px`;
+    });
     await page.waitForTimeout(150);
     const styles = await el.evaluate((node, props) => {
         const cs = getComputedStyle(node);
@@ -149,6 +162,9 @@ function normalise(prop, value) {
     let v = value.trim();
     if (prop === 'font-family') v = v.split(',')[0].replace(/["']/g, '').trim();
     v = v.replace(/rgba\(0, 0, 0, 0\)/g, 'transparent');
+    // equal for display: no minimum height, and shadows that are all transparent
+    if (prop === 'min-height' && v === 'auto') v = '0px';
+    if (prop === 'box-shadow' && /^(transparent 0px 0px 0px 0px(, )?)+$/.test(v)) v = 'none';
     v = v.replace(/(\d+\.\d+)px/g, (_, n) => `${Math.round(Number(n) * 2) / 2}px`);
     return v;
 }
@@ -172,58 +188,81 @@ function compareImages(a, b, diffPath) {
 
 const browser = await chromium.launch();
 const context = await browser.newContext({ viewport: { width: 1280, height: 800 }, deviceScaleFactor: 1 });
-const page = await context.newPage();
-let failures = 0;
+/** Pages rendering in parallel (VISUAL_WORKERS); every comparison loads two stories. */
+const WORKERS = Number(process.env.VISUAL_WORKERS ?? 6);
 
+/** Renders one case in one combination and compares the two captures. */
+async function compare(page, name, kase, c) {
+    const outDir = join(root, '.visual', name);
+    const id = `${kase.label.replace(/\W+/g, '-')}--${c.key}`;
+    try {
+        const ours = await capture(page, oursUrl(kase.ours.story, c), kase.ours.selector, kase.hover);
+        const ref = await capture(page, refUrl(kase.ref.story, c), kase.ref.selector, kase.hover);
+        writeFileSync(join(outDir, `${id}.ours.png`), PNG.sync.write(ours.png));
+        writeFileSync(join(outDir, `${id}.ref.png`), PNG.sync.write(ref.png));
+        const ignore = new Set(kase.ignore ?? []);
+        // the style and colour of a border nobody can see do not matter
+        for (const side of ['top', 'right', 'bottom', 'left']) {
+            if (
+                parseFloat(ours.styles[`border-${side}-width`]) === 0 &&
+                parseFloat(ref.styles[`border-${side}-width`]) === 0
+            ) {
+                ignore.add(`border-${side}-color`);
+                if (side === 'top') ignore.add('border-top-style');
+            }
+        }
+        const styleDiffs = STYLE_PROPS.filter((p) => !ignore.has(p))
+            .map((p) => [p, normalise(p, ours.styles[p]), normalise(p, ref.styles[p])])
+            .filter(([, a, b]) => a !== b);
+        if (!ignore.has('width') && Math.abs(ours.width - ref.width) > SIZE_TOLERANCE)
+            styleDiffs.push(['width', `${ours.width}px`, `${ref.width}px`]);
+        if (!ignore.has('height') && Math.abs(ours.height - ref.height) > SIZE_TOLERANCE)
+            styleDiffs.push(['box height', `${ours.height}px`, `${ref.height}px`]);
+        const image =
+            kase.pixels === false
+                ? { ratio: 0, note: 'not compared' }
+                : compareImages(ours.png, ref.png, join(outDir, `${id}.diff.png`));
+        const ok = !styleDiffs.length && image.ratio <= PIXEL_TOLERANCE;
+        return { kase: kase.label, combo: c.key, ok, styleDiffs, image };
+    } catch (error) {
+        return {
+            kase: kase.label,
+            combo: c.key,
+            ok: false,
+            styleDiffs: [],
+            image: { ratio: 1, note: String(error.message).split('\n')[0] }
+        };
+    }
+}
+
+const jobs = [];
 for (const name of names) {
     const outDir = join(root, '.visual', name);
     rmSync(outDir, { recursive: true, force: true });
     mkdirSync(outDir, { recursive: true });
-    const rows = [];
-    for (const kase of CASES[name]) {
-        for (const c of combos) {
-            const id = `${kase.label.replace(/\W+/g, '-')}--${c.key}`;
-            let row;
-            try {
-                const ours = await capture(page, oursUrl(kase.ours.story, c), kase.ours.selector, kase.hover);
-                const ref = await capture(page, refUrl(kase.ref.story, c), kase.ref.selector, kase.hover);
-                writeFileSync(join(outDir, `${id}.ours.png`), PNG.sync.write(ours.png));
-                writeFileSync(join(outDir, `${id}.ref.png`), PNG.sync.write(ref.png));
-                const ignore = new Set(kase.ignore ?? []);
-                // the style and colour of a border nobody can see do not matter
-                for (const side of ['top', 'right', 'bottom', 'left']) {
-                    if (
-                        parseFloat(ours.styles[`border-${side}-width`]) === 0 &&
-                        parseFloat(ref.styles[`border-${side}-width`]) === 0
-                    ) {
-                        ignore.add(`border-${side}-color`);
-                        if (side === 'top') ignore.add('border-top-style');
-                    }
-                }
-                const styleDiffs = STYLE_PROPS.filter((p) => !ignore.has(p))
-                    .map((p) => [p, normalise(p, ours.styles[p]), normalise(p, ref.styles[p])])
-                    .filter(([, a, b]) => a !== b);
-                if (!ignore.has('width') && Math.abs(ours.width - ref.width) > SIZE_TOLERANCE)
-                    styleDiffs.push(['width', `${ours.width}px`, `${ref.width}px`]);
-                const image = compareImages(ours.png, ref.png, join(outDir, `${id}.diff.png`));
-                const ok = !styleDiffs.length && image.ratio <= PIXEL_TOLERANCE;
-                row = { kase: kase.label, combo: c.key, ok, styleDiffs, image };
-            } catch (error) {
-                row = {
-                    kase: kase.label,
-                    combo: c.key,
-                    ok: false,
-                    styleDiffs: [],
-                    image: { ratio: 1, note: String(error.message).split('\n')[0] }
-                };
-            }
-            if (!row.ok) failures++;
-            rows.push(row);
+    CASES[name].forEach((kase, k) =>
+        combos.forEach((c, i) => jobs.push({ name, kase, c, order: k * combos.length + i }))
+    );
+}
+const results = new Map(names.map((name) => [name, []]));
+let next = 0;
+await Promise.all(
+    Array.from({ length: Math.min(WORKERS, jobs.length) }, async () => {
+        const page = await context.newPage();
+        while (next < jobs.length) {
+            const job = jobs[next++];
+            const row = await compare(page, job.name, job.kase, job.c);
+            results.get(job.name).push({ ...row, order: job.order });
             process.stdout.write(row.ok ? '.' : 'x');
         }
-    }
-    process.stdout.write('\n');
+        await page.close();
+    })
+);
+process.stdout.write('\n');
 
+let failures = 0;
+for (const name of names) {
+    const rows = results.get(name).sort((a, b) => a.order - b.order);
     const lines = [
         `# Visual comparison: ${name}`,
         '',
@@ -236,8 +275,9 @@ for (const name of names) {
                 `| ${r.kase} | ${r.combo} | ${r.ok ? 'ok' : '**diff**'} | ${(r.image.ratio * 100).toFixed(1)}%${r.image.note ? ` (${r.image.note})` : ''} | ${r.styleDiffs.map(([p, a, b]) => `\`${p}\`: ${a} → ${b}`).join('<br>')} |`
         )
     ];
-    writeFileSync(join(outDir, 'report.md'), lines.join('\n') + '\n');
+    writeFileSync(join(root, '.visual', name, 'report.md'), lines.join('\n') + '\n');
     const bad = rows.filter((r) => !r.ok).length;
+    failures += bad;
     console.log(`${name}: ${rows.length - bad}/${rows.length} match, report in .visual/${name}/report.md`);
 }
 
