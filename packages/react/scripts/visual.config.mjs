@@ -6,6 +6,7 @@
  *   ours      { story: Storybook story id, selector: Playwright selector of the element }
  *   ref       the same for https://sap.github.io/fundamental-styles/
  *   hover     hover the element before capturing
+ *   pixels    false: compare computed styles only (e.g. when the texts differ)
  *   ignore    computed style properties (or "width") not to compare, with the reason in a comment
  */
 const FS = 'sap-design-components-';
@@ -21,6 +22,14 @@ export const CASES = {
             label: 'size xxl',
             ours: { story: 'components-icon--sizes', selector: 'span[data-glyph] >> nth=4' },
             ref: { story: `${FS}icons-sap-icons--sizes`, selector: '.sap-icon >> nth=4' }
+        },
+        {
+            label: 'narrow glyph',
+            ours: { story: 'components-icon--rtl', selector: 'span[data-glyph] >> nth=0' },
+            ref: { story: `${FS}icons-sap-icons--sizes`, selector: '.sap-icon >> nth=1' },
+            // a different glyph: only the box is compared
+            pixels: false,
+            ignore: ['height', 'font-size', 'line-height', 'color']
         },
         {
             label: 'color default',

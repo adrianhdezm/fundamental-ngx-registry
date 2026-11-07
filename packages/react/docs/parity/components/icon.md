@@ -40,9 +40,10 @@ API: `glyph`, `font`, `size`, `color`, `background` as in Angular; `aria-label` 
 
 ### Visual comparison
 
-`pnpm visual icon`: 5 cases (sizes `md` and `xxl`, colours default, negative and information) × 16 combinations,
-80/80 matching after the fix below.
+`pnpm visual icon`: 6 cases (sizes `md` and `xxl`, a narrow glyph, colours default, negative and information) × 16
+combinations, 96/96 matching after the fixes below.
 
-| Difference                                                       | Cause                                                              | Resolution                                    |
-| ---------------------------------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------- |
-| Icon box 3px taller than fundamental-styles (35px vs 32px at md) | `tailwind-merge` dropped `leading-none` before the font-size class | Fixed: `leading-none` follows the size class. |
+| Difference                                                       | Cause                                                              | Resolution                                      |
+| ---------------------------------------------------------------- | ------------------------------------------------------------------ | ----------------------------------------------- |
+| Icon box 3px taller than fundamental-styles (35px vs 32px at md) | `tailwind-merge` dropped `leading-none` before the font-size class | Fixed: `leading-none` follows the size class.   |
+| Narrow glyphs (e.g. `slim-arrow-down`) narrower than 1em (10px)  | The box was as wide as the glyph                                   | Fixed: `w-[1em]`, as fundamental-styles' icons. |
