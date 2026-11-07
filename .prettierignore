@@ -1,7 +1,7 @@
 pnpm-lock.yaml
 dist
-registry/styles/themes
-registry/styles/tokens.css
-registry/styles/fonts.css
-registry/ui/icon/icon-glyphs.ts
-public/r
+packages/*/public/r
+packages/angular/registry/styles/themes
+packages/angular/registry/styles/tokens.css
+packages/angular/registry/styles/fonts.css
+packages/angular/registry/ui/icon/icon-glyphs.ts

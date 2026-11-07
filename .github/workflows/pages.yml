@@ -1,6 +1,9 @@
-# Builds Storybook (with the shadcn registry under /r) and publishes it to GitHub Pages:
-# https://adrianhdezm.github.io/fundamental-ngx-registry/
-name: Storybook on GitHub Pages
+# Builds every package's Storybook (each with its shadcn registry under /<package>/r) and the landing page, and
+# publishes them to GitHub Pages:
+#   https://adrianhdezm.github.io/fundamental-ui-registry/            landing page (site/index.html)
+#   https://adrianhdezm.github.io/fundamental-ui-registry/angular/    Storybook of packages/angular
+#   https://adrianhdezm.github.io/fundamental-ui-registry/angular/r/  its registry
+name: Site on GitHub Pages
 
 on:
   push:
@@ -28,11 +31,11 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm build-storybook
+      - run: pnpm build-site
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/storybook
+          path: dist/site
 
   deploy:
     needs: build

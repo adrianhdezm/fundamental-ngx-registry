@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>fundamental-ui-registry</title>
+        <meta
+            name="description"
+            content="SAP Fiori Horizon components as copy-paste source, distributed as shadcn registries."
+        />
+        <style>
+            :root {
+                color-scheme: light dark;
+                --background: #f5f6f7;
+                --surface: #ffffff;
+                --text: #1d2d3e;
+                --muted: #556b82;
+                --border: #d9d9d9;
+                --link: #0064d9;
+                font-family:
+                    '72',
+                    system-ui,
+                    -apple-system,
+                    'Segoe UI',
+                    sans-serif;
+            }
+            @media (prefers-color-scheme: dark) {
+                :root {
+                    --background: #12171c;
+                    --surface: #1d232a;
+                    --text: #f5f6f7;
+                    --muted: #a9b4be;
+                    --border: #3a434e;
+                    --link: #a6cfff;
+                }
+            }
+            body {
+                margin: 0;
+                background: var(--background);
+                color: var(--text);
+                line-height: 1.5;
+            }
+            main {
+                max-width: 48rem;
+                margin: 0 auto;
+                padding: 3rem 1rem;
+            }
+            h1 {
+                margin: 0 0 0.5rem;
+                font-size: 1.75rem;
+            }
+            p {
+                color: var(--muted);
+            }
+            ul {
+                display: grid;
+                gap: 1rem;
+                padding: 0;
+                list-style: none;
+            }
+            li {
+                padding: 1.25rem;
+                border: 1px solid var(--border);
+                border-radius: 0.75rem;
+                background: var(--surface);
+            }
+            h2 {
+                margin: 0 0 0.25rem;
+                font-size: 1.125rem;
+            }
+            a {
+                color: var(--link);
+            }
+            code {
+                font-size: 0.875em;
+                overflow-wrap: anywhere;
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <h1>fundamental-ui-registry</h1>
+            <p>
+                SAP Fiori Horizon components as copy-paste source, styled with Tailwind CSS v4 on the SAP theme tokens
+                and distributed as <a href="https://ui.shadcn.com/docs/registry">shadcn registries</a>. An unofficial
+                port of SAP's Fundamental Library.
+            </p>
+            <ul>
+                <li>
+                    <h2>Angular</h2>
+                    <p>Ported from <code>@fundamental-ngx/core</code>, built on the Angular CDK.</p>
+                    <a href="angular/">Storybook</a> ·
+                    <a href="angular/r/registry.json">Registry index</a>
+                    <p>
+                        <code
+                            >npx shadcn add
+                            https://adrianhdezm.github.io/fundamental-ui-registry/angular/r/button.json</code
+                        >
+                    </p>
+                </li>
+            </ul>
+            <p>
+                Source, setup and license:
+                <a href="https://github.com/adrianhdezm/fundamental-ui-registry"
+                    >github.com/adrianhdezm/fundamental-ui-registry</a
+                >
+            </p>
+        </main>
+    </body>
+</html>

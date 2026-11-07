@@ -20,10 +20,9 @@ import { fileURLToPath } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const checkOnly = process.argv.includes('--check');
-const registryUrl = (process.env.REGISTRY_URL ?? 'https://adrianhdezm.github.io/fundamental-ngx-registry/r').replace(
-    /\/$/,
-    ''
-);
+const registryUrl = (
+    process.env.REGISTRY_URL ?? 'https://adrianhdezm.github.io/fundamental-ui-registry/angular/r'
+).replace(/\/$/, '');
 const themingVersion = JSON.parse(
     readFileSync(join(root, 'node_modules/@sap-theming/theming-base-content/package.json'), 'utf8')
 ).version;
