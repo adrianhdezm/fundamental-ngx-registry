@@ -125,9 +125,13 @@ const refUrl = (story, c) =>
     `${FS_URL}/iframe.html?id=${story}&viewMode=story&globals=styles-theme:${c.theme};contentDensity:${c.density};directionality:${c.dir}`;
 
 /** Renders a story and returns the computed styles, size and screenshot of the element matched by `selector`. */
-async function capture(page, url, selector, hover) {
+async function capture(page, url, selector, hover, props) {
     await page.goto(url, { waitUntil: 'networkidle' });
     await page.evaluate(() => document.fonts.ready);
+    // the end state of every element: no animation (e.g. pulsing busy dots) or transition in progress
+    await page.addStyleTag({
+        content: '*, *::before, *::after { animation: none !important; transition: none !important; }'
+    });
     // inside the story: Storybook's own (hidden) controls are elsewhere in the iframe
     const el = page.locator('#storybook-root').locator(selector).first();
     await el.waitFor({ state: 'visible', timeout: 15000 });
@@ -153,7 +157,7 @@ async function capture(page, url, selector, hover) {
             height: box.height,
             styles: Object.fromEntries(props.map((p) => [p, cs.getPropertyValue(p)]))
         };
-    }, STYLE_PROPS);
+    }, props);
     const png = PNG.sync.read(await el.screenshot({ animations: 'disabled' }));
     return { ...styles, png };
 }
@@ -197,8 +201,9 @@ async function compare(page, name, kase, c) {
     const outDir = join(root, '.visual', name);
     const id = `${kase.label.replace(/\W+/g, '-')}--${c.key}`;
     try {
-        const ours = await capture(page, oursUrl(kase.ours.story, c), kase.ours.selector, kase.hover);
-        const ref = await capture(page, refUrl(kase.ref.story, c), kase.ref.selector, kase.hover);
+        const props = [...STYLE_PROPS, ...(kase.props ?? [])];
+        const ours = await capture(page, oursUrl(kase.ours.story, c), kase.ours.selector, kase.hover, props);
+        const ref = await capture(page, refUrl(kase.ref.story, c), kase.ref.selector, kase.hover, props);
         writeFileSync(join(outDir, `${id}.ours.png`), PNG.sync.write(ours.png));
         writeFileSync(join(outDir, `${id}.ref.png`), PNG.sync.write(ref.png));
         const ignore = new Set(kase.ignore ?? []);
@@ -212,7 +217,8 @@ async function compare(page, name, kase, c) {
                 if (side === 'top') ignore.add('border-top-style');
             }
         }
-        const styleDiffs = STYLE_PROPS.filter((p) => !ignore.has(p))
+        const styleDiffs = props
+            .filter((p) => !ignore.has(p))
             .map((p) => [p, normalise(p, ours.styles[p]), normalise(p, ref.styles[p])])
             .filter(([, a, b]) => a !== b);
         if (!ignore.has('width') && Math.abs(ours.width - ref.width) > SIZE_TOLERANCE)
