@@ -35,7 +35,7 @@ scripts/
   generate-tokens.mjs     regenerates styles/ and the icon glyph map from theming-base-content
   build-registry.mjs      builds public/r/*.json and checks each component's imports
   check-styles.mjs        compiles every class and flags unknown SAP tokens / broken var() names
-  visual.mjs              compares components with the fundamental-styles Storybook (visual.config.mjs)
+  visual.mjs              compares components with the fundamental-styles Storybook (cases in visual/<name>.mjs)
   tracker.mjs             updates the porting tracker in docs/parity/README.md
 docs/                     Storybook introduction; parity/ tracks the port, one report per component
 .storybook/, tests/       Storybook and Vitest setup

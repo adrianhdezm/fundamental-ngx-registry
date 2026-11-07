@@ -41,7 +41,7 @@ pnpm storybook                              # http://localhost:6007
 - Styling: Tailwind classes on SAP tokens only, as in the Angular package. Class strings must be literal for Tailwind
   to find them. Put `leading-*` after a `text-*` size in the same string or variant: `tailwind-merge` drops a
   line-height that comes before a font size.
-- Visual reference is fundamental-styles: add cases to `scripts/visual.config.mjs` and run `pnpm visual <name>`.
+- Visual reference is fundamental-styles: add cases in `scripts/visual/<name>.mjs` and run `pnpm visual <name>`.
 
 ## Tests
 
