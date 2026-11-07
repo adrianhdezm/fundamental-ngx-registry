@@ -185,6 +185,20 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "Checkbox with a label, value states, read-only and display-only modes, and an optional selectable third state.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils", "theme"],
+      "files": [
+        {
+          "path": "registry/ui/checkbox/checkbox.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

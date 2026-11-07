@@ -80,7 +80,9 @@
       "phase": 1,
       "source": ["src/Forms/__stories__/Checkbox.stories.js"],
       "sourceStories": 9,
-      "status": "todo"
+      "status": "done",
+      "visual": "512/512",
+      "notes": "validation message popover (fundamental-react validationState.text): after form message and popover"
     },
     {
       "name": "combobox",
