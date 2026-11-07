@@ -187,7 +187,8 @@
       "phase": 1,
       "source": ["src/Icon/__stories__/Icon.stories.js"],
       "sourceStories": 4,
-      "status": "todo"
+      "status": "done",
+      "visual": "80/80"
     },
     {
       "name": "illustrated-message",

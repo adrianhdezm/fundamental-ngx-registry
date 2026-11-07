@@ -66,6 +66,23 @@
       "css": {
         "@import \"./styles/fundamental.css\"": {}
       }
+    },
+    {
+      "name": "icon",
+      "type": "registry:ui",
+      "title": "Icon",
+      "description": "Icons from the SAP-icons, SAP-icons-TNT and Business Suite fonts.",
+      "registryDependencies": ["utils", "theme"],
+      "files": [
+        {
+          "path": "registry/ui/icon/icon.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/icon/icon-glyphs.ts",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
