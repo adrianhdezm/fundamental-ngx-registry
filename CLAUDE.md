@@ -1,8 +1,14 @@
-# fundamental-ngx-registry
+# fundamental-ui-registry
 
-SAP Fiori Horizon components for Angular, distributed shadcn-style (copy-paste source). Each component is a port of
-`@fundamental-ngx/core` (behaviour, ARIA, keyboard), with the visuals of fundamental-styles rebuilt as Tailwind v4
-utilities on the `@sap-theming/theming-base-content` tokens. See `README.md` for the layout and usage.
+SAP Fiori Horizon components distributed shadcn-style (copy-paste source), as a pnpm workspace of independent
+registries. Each package has its own `registry.json`, Storybook, tests, tsconfig and dependencies, and imports nothing
+from the others. See `README.md` for the layout and usage.
+
+| Package            | Port of                 | Published at (site root `https://adrianhdezm.github.io/fundamental-ui-registry/`) |
+| ------------------ | ----------------------- | --------------------------------------------------------------------------------- |
+| `packages/angular` | `@fundamental-ngx/core` | Storybook `/angular/`, registry `/angular/r/<name>.json`                          |
+
+Each package has its own `CLAUDE.md` with its component and test rules; read it before working in that package.
 
 ## Workflow
 
@@ -16,40 +22,23 @@ utilities on the `@sap-theming/theming-base-content` tokens. See `README.md` for
   The body explains what changed and why.
 - Run `pnpm check` before pushing; it must pass.
 
-## Commands
+## Layout
 
-Node 24 (`.nvmrc`) and pnpm (settings in `pnpm-workspace.yaml`, not in `package.json`).
-
-```sh
-pnpm check                                  # everything below; takes about 5 minutes
-pnpm typecheck && pnpm typecheck:tests      # strict templates for sources and specs
-pnpm check:styles                           # SAP token classes
-pnpm registry:check                         # registry.json and each component's imports
-pnpm test                                   # component and lib tests (Vitest browser mode, project "unit")
-pnpm test:a11y                              # axe on every story, Horizon and Horizon HC Black
-pnpm exec vitest run --project unit registry/ui/menu/   # one component; keep the trailing slash
-pnpm format                                 # Prettier
-pnpm storybook                              # http://localhost:6006
+```
+packages/angular/         the Angular registry (see packages/angular/CLAUDE.md)
+site/index.html           landing page at the site root
+scripts/build-site.mjs    assembles dist/site: the landing page and each package's Storybook under /<package>/
+.github/workflows/        GitHub Pages deployment of dist/site
 ```
 
-## Components
+## Commands
 
-- One folder per component: `registry/ui/<name>/<name>.ts`, `<name>.spec.ts`, `<name>.stories.ts`, `index.ts`, and an
-  entry in `registry.json` (`registryDependencies` lists the components and libs it imports). Imports use the aliases
-  `@/ui/*` and `@/lib/*`.
-- Standalone, signal inputs/models/outputs, `ChangeDetectionStrategy.OnPush`, zoneless. Behaviour from the Angular
-  CDK; ARIA and keyboard handling ported from `@fundamental-ngx/core`.
-- Every source file keeps its attribution header (ported from, copyright, Apache-2.0).
-- Styling: Tailwind classes on SAP tokens only (`bg-sap-button-hover-background`, see README "Token utilities"); no
-  hard-coded colours or sizes where a token exists. Class strings must be literal for Tailwind to find them: no
-  `${}` inside a class name (a module-level constant interpolated whole is fine, declared above the component). Dynamic
-  values go through CSS variables. Variants: `compact:`, `condensed:`, `hc:`, `toggled:`, `rtl:`.
-- Visual reference is fundamental-styles: compare in Storybook with the theme, density and RTL switchers.
+Node 24 (`.nvmrc`) and pnpm (settings in `pnpm-workspace.yaml`, not in `package.json`). Run at the repository root:
 
-## Tests
-
-- Every behaviour change comes with a browser test in the component's spec (see `docs/testing.mdx`). Test hosts keep
-  state in signals; await `fixture.whenStable()` (plus a frame for overlays). No `it.todo` or `it.skip` left behind
-  without a reason.
-- Stories cover the upstream docs examples. Stories named "Open: …" open their overlay in `play`, so the a11y run
-  checks it. A story may turn off an axe rule only where the SAP theme itself is the cause, with a comment.
+```sh
+pnpm install
+pnpm check                  # every package's check, one package at a time
+pnpm format                 # Prettier, whole repository (config at the root)
+pnpm build-site             # every package's Storybook and registry, assembled into dist/site
+pnpm angular <script>       # a script of packages/angular, e.g. `pnpm angular test`
+```
