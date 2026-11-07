@@ -237,7 +237,9 @@
       "phase": 1,
       "source": ["src/LayoutGrid/__stories__/LayoutGrid.stories.js"],
       "sourceStories": 8,
-      "status": "todo"
+      "status": "done",
+      "visual": "400/400",
+      "notes": "fundamental-react's auto-span of unspanned columns is `colGrow` (no children cloning)"
     },
     {
       "name": "layout-panel",

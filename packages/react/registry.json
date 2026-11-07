@@ -157,6 +157,20 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "layout-grid",
+      "type": "registry:ui",
+      "title": "Layout Grid",
+      "description": "A responsive 12-column grid with gutters, spans and offsets per breakpoint (600, 1024 and 1440px), growing columns and nesting.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils", "theme"],
+      "files": [
+        {
+          "path": "registry/ui/layout-grid/layout-grid.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
