@@ -125,6 +125,20 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "busy-indicator",
+      "type": "registry:ui",
+      "title": "Busy Indicator",
+      "description": "Three pulsing dots that show loading; wraps content to cover it and make it inert while loading.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils", "theme"],
+      "files": [
+        {
+          "path": "registry/ui/busy-indicator/busy-indicator.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
