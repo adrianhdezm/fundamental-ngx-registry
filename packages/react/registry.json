@@ -171,6 +171,20 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "counter",
+      "type": "registry:ui",
+      "title": "Counter",
+      "description": "A small badge with a number, such as unread items, inline with text or as a notification on an icon.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils", "theme"],
+      "files": [
+        {
+          "path": "registry/ui/counter/counter.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
