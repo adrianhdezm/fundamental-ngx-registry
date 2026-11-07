@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "fundamental-ngx-registry",
-  "homepage": "https://github.com/adrianhdezm/fundamental-ngx-registry",
+  "name": "fundamental-ui-registry-angular",
+  "homepage": "https://github.com/adrianhdezm/fundamental-ui-registry/tree/main/packages/angular",
   "items": [
     {
       "name": "utils",
