@@ -247,7 +247,8 @@
       "phase": 1,
       "source": ["src/Link/__stories__/Link.stories.js"],
       "sourceStories": 4,
-      "status": "todo"
+      "status": "done",
+      "visual": "112/112"
     },
     {
       "name": "list",

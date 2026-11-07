@@ -111,6 +111,20 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "link",
+      "type": "registry:ui",
+      "title": "Link",
+      "description": "Links in the standard, emphasized, subtle, undecorated, inverted and disabled styles, with icons and a touch target size.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils", "theme"],
+      "files": [
+        {
+          "path": "registry/ui/link/link.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
