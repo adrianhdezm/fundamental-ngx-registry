@@ -97,6 +97,20 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "title",
+      "type": "registry:ui",
+      "title": "Title",
+      "description": "Headings with the SAP header typography; the visual size can differ from the heading level.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils", "theme"],
+      "files": [
+        {
+          "path": "registry/ui/title/title.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

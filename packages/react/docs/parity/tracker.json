@@ -526,7 +526,8 @@
       "phase": 1,
       "source": ["src/Title/__stories__/Title.stories.js"],
       "sourceStories": 5,
-      "status": "todo"
+      "status": "done",
+      "visual": "128/128"
     },
     {
       "name": "token",
