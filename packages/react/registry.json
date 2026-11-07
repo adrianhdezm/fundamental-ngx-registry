@@ -217,6 +217,20 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "layout-panel",
+      "type": "registry:ui",
+      "title": "Layout Panel",
+      "description": "A rounded content container with a header (title, description, actions), filters, a body that can bleed to the edges and an aligned footer.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils", "theme"],
+      "files": [
+        {
+          "path": "registry/ui/layout-panel/layout-panel.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

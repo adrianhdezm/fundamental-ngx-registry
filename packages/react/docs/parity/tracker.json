@@ -252,7 +252,9 @@
       "phase": 1,
       "source": ["src/LayoutPanel/__stories__/LayoutPanel.stories.js"],
       "sourceStories": 4,
-      "status": "todo"
+      "status": "done",
+      "visual": "192/192",
+      "notes": "SingleLayoutPanel story: popover menus and tile are placeholders until menu, popover and tile"
     },
     {
       "name": "link",
